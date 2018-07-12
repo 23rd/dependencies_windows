@@ -1,0 +1,83 @@
+arch = environment.x64
+cc = $cl_x64
+cxx = $cl_x64
+cc_host = $cl_x64
+cxx_host = $cl_x64
+asm = $ml_x64
+build obj\client\windows\unittests\client_tests.actions_depends.stamp: $
+    stamp obj\client\windows\unittests\gtest.lib $
+    obj\client\windows\unittests\gmock.lib obj\client\windows\common.lib $
+    obj\client\windows\crash_generation\crash_generation_server.lib $
+    obj\client\windows\crash_generation\crash_generation_client.lib $
+    obj\client\windows\handler\exception_handler.lib $
+    obj\client\windows\unittests\processor_bits.lib
+
+pdbname_c = obj\client\windows\unittests\client_tests.c.pdb
+pdbname_cc = obj\client\windows\unittests\client_tests.cc.pdb
+pchprefix = client_tests
+defines = -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -DWIN32 -D_WINDOWS $
+    -D_HAS_EXCEPTIONS=0 -DNOMINMAX -D_CRT_RAND_S $
+    -DCERT_CHAIN_PARA_HAS_EXTRA_FIELDS -DWIN32_LEAN_AND_MEAN -D_SECURE_ATL $
+    -D_HAS_TR1=0 -D_VARIADIC_MAX=10 -D_CRT_SECURE_NO_DEPRECATE $
+    -D_CRT_NONSTDC_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE $
+    -D_USING_V110_SDK71_ -DNO_TCMALLOC -DNDEBUG -DNVALGRIND -DPURIFY $
+    -D_UNICODE -DUNICODE
+asmflags = 
+rcflags = /I..\.. /I..\..\client\windows\unittests /l409
+includes = -I..\..\testing\include -I..\..\testing\gtest\include $
+    -I..\..\testing\googletest\include -I..\..\testing\googletest $
+    -I..\..\testing\googlemock\include -I..\..\testing\googlemock $
+    -I..\..\testing -I..\.. -I..\..\third_party\platformsdk_win7\files\Include
+midl_includes = -I..\..\third_party\platformsdk_win7\files\Include
+cflags = /wd4100 /wd4127 /wd4396 /wd4503 /wd4512 /wd4819 /wd4995 /wd4702 $
+    /wd4800 /Od /fp:precise /W4 /WX /Zi /GR- /Gy /GS- /MT /Zc:wchar_t- /FS
+cflags_c = 
+cflags_cc = /TP
+arflags = 
+
+build obj\client\windows\unittests\client_tests.exception_handler_test.obj: $
+    cxx ..\..\client\windows\unittests\exception_handler_test.cc
+build $
+    obj\client\windows\unittests\client_tests.exception_handler_death_test.obj: $
+    cxx ..\..\client\windows\unittests\exception_handler_death_test.cc
+build $
+    obj\client\windows\unittests\client_tests.exception_handler_nesting_test.obj: $
+    cxx ..\..\client\windows\unittests\exception_handler_nesting_test.cc
+build obj\client\windows\unittests\client_tests.minidump_test.obj: cxx $
+    ..\..\client\windows\unittests\minidump_test.cc
+build obj\client\windows\unittests\client_tests.dump_analysis.obj: cxx $
+    ..\..\client\windows\unittests\dump_analysis.cc
+build $
+    obj\client\windows\unittests\client_tests.crash_generation_server_test.obj: $
+    cxx ..\..\client\windows\unittests\crash_generation_server_test.cc
+
+manifests = $
+    obj\client\windows\unittests\client_tests.client_tests.exe.generated.manifest
+intermediatemanifest = $
+    obj\client\windows\unittests\client_tests.client_tests.exe.intermediate.manifest
+ldflags = /DEBUG /MACHINE:X64 $
+    /LIBPATH:"..\..\third_party\platformsdk_win7\files\Lib\x64" $
+    /DELAYLOAD:dbghelp.dll /DELAYLOAD:dwmapi.dll /DELAYLOAD:uxtheme.dll $
+    /PDB:client_tests.exe.pdb /dynamicbase /ignore:4199 /ignore:4221 $
+    /nxcompat /SUBSYSTEM:CONSOLE /INCREMENTAL:NO /FIXED:NO /OPT:NOICF $
+    wininet.lib version.lib msimg32.lib ws2_32.lib usp10.lib psapi.lib $
+    dbghelp.lib /DYNAMICBASE /NXCOMPAT /MANIFEST $
+    /ManifestFile:obj\client\windows\unittests\client_tests.client_tests.exe.intermediate.manifest $
+    /MANIFESTUAC:NO /ALLOWISOLATION
+libs = 
+build client_tests.exe client_tests.exe.pdb: link_embed $
+    obj\client\windows\unittests\client_tests.exception_handler_test.obj $
+    obj\client\windows\unittests\client_tests.exception_handler_death_test.obj $
+    obj\client\windows\unittests\client_tests.exception_handler_nesting_test.obj $
+    obj\client\windows\unittests\client_tests.minidump_test.obj $
+    obj\client\windows\unittests\client_tests.dump_analysis.obj $
+    obj\client\windows\unittests\client_tests.crash_generation_server_test.obj $
+    obj\client\windows\unittests\gtest.lib $
+    obj\client\windows\unittests\gmock.lib obj\client\windows\common.lib $
+    obj\client\windows\crash_generation\crash_generation_server.lib $
+    obj\client\windows\crash_generation\crash_generation_client.lib $
+    obj\client\windows\handler\exception_handler.lib $
+    obj\client\windows\unittests\processor_bits.lib | $
+    obj\client\windows\unittests\client_tests.client_tests.exe.generated.manifest $
+    || obj\client\windows\unittests\client_tests.actions_depends.stamp
+  binary = client_tests.exe

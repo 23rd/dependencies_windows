@@ -1,0 +1,15 @@
+arch = environment.x86
+cc = $cl_x86
+cxx = $cl_x86
+cc_host = $cl_x86
+cxx_host = $cl_x86
+asm = $ml_x86
+build obj\client\windows\build_all.actions_depends.stamp: stamp $
+    obj\client\windows\crash_generation\crash_generation_server.lib $
+    obj\client\windows\crash_generation\crash_generation_client.lib $
+    obj\client\windows\handler\exception_handler.lib $
+    obj\client\windows\sender\crash_report_sender.lib client_tests.exe $
+    obj\client\windows\unittests\processor_bits.lib $
+    obj\client\windows\unittests\gtest.lib $
+    obj\client\windows\unittests\gmock.lib crash_generation_app.exe
+

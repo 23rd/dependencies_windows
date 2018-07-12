@@ -1,0 +1,43 @@
+arch = environment.x86
+cc = $cl_x86
+cxx = $cl_x86
+cc_host = $cl_x86
+cxx_host = $cl_x86
+asm = $ml_x86
+pdbname_c = obj\client\windows\crash_generation\crash_generation_server.c.pdb
+pdbname_cc = $
+    obj\client\windows\crash_generation\crash_generation_server.cc.pdb
+pchprefix = crash_generation_server
+defines = -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -DWIN32 -D_WINDOWS $
+    -D_HAS_EXCEPTIONS=0 -DNOMINMAX -D_CRT_RAND_S $
+    -DCERT_CHAIN_PARA_HAS_EXTRA_FIELDS -DWIN32_LEAN_AND_MEAN -D_SECURE_ATL $
+    -D_HAS_TR1=0 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_WARNINGS $
+    -D_CRT_NONSTDC_NO_DEPRECATE -D_USING_V110_SDK71_ -DNDEBUG -DNVALGRIND $
+    -D_UNICODE -DUNICODE
+asmflags = 
+rcflags = /I..\.. /I..\..\client\windows\crash_generation /l409
+includes = -I..\.. -I..\..\third_party\platformsdk_win7\files\Include
+midl_includes = -I..\..\third_party\platformsdk_win7\files\Include
+cflags = /wd4100 /wd4127 /wd4396 /wd4503 /wd4512 /wd4819 /wd4995 /wd4702 $
+    /wd4800 /O2 /fp:precise /W4 /WX /Zi /GR- /Gy /GS /MT /Zc:wchar_t- /FS
+cflags_c = 
+cflags_cc = /TP
+arflags = 
+
+build $
+    obj\client\windows\crash_generation\crash_generation_server.client_info.obj: $
+    cxx ..\..\client\windows\crash_generation\client_info.cc
+build $
+    obj\client\windows\crash_generation\crash_generation_server.crash_generation_server.obj: $
+    cxx ..\..\client\windows\crash_generation\crash_generation_server.cc
+build $
+    obj\client\windows\crash_generation\crash_generation_server.minidump_generator.obj: $
+    cxx ..\..\client\windows\crash_generation\minidump_generator.cc
+
+build obj\client\windows\crash_generation\crash_generation_server.lib: $
+    alink $
+    obj\client\windows\crash_generation\crash_generation_server.client_info.obj $
+    obj\client\windows\crash_generation\crash_generation_server.crash_generation_server.obj $
+    obj\client\windows\crash_generation\crash_generation_server.minidump_generator.obj
+  libflags = /LIBPATH:"..\..\third_party\platformsdk_win7\files\Lib" $
+      /ignore:4221

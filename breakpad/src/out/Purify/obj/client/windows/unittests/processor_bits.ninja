@@ -1,0 +1,52 @@
+arch = environment.x86
+cc = $cl_x86
+cxx = $cl_x86
+cc_host = $cl_x86
+cxx_host = $cl_x86
+asm = $ml_x86
+pdbname_c = obj\client\windows\unittests\processor_bits.c.pdb
+pdbname_cc = obj\client\windows\unittests\processor_bits.cc.pdb
+pchprefix = processor_bits
+defines = -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -DWIN32 -D_WINDOWS $
+    -D_HAS_EXCEPTIONS=0 -DNOMINMAX -D_CRT_RAND_S $
+    -DCERT_CHAIN_PARA_HAS_EXTRA_FIELDS -DWIN32_LEAN_AND_MEAN -D_SECURE_ATL $
+    -D_HAS_TR1=0 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_WARNINGS $
+    -D_CRT_NONSTDC_NO_DEPRECATE -D_USING_V110_SDK71_ -DNDEBUG -DNVALGRIND $
+    -D_UNICODE -DUNICODE
+asmflags = 
+rcflags = /I..\.. /I..\..\client\windows\unittests /l409
+includes = -I..\.. -I..\..\third_party\platformsdk_win7\files\Include
+midl_includes = -I..\..\third_party\platformsdk_win7\files\Include
+cflags = /wd4100 /wd4127 /wd4396 /wd4503 /wd4512 /wd4819 /wd4995 /wd4702 $
+    /wd4800 /O2 /fp:precise /W4 /WX /Zi /GR- /Gy /GS /MT /Zc:wchar_t- /FS
+cflags_c = 
+cflags_cc = /TP
+arflags = 
+
+build obj\common\processor_bits.string_conversion.obj: cxx $
+    ..\..\common\string_conversion.cc
+build obj\processor\processor_bits.basic_code_modules.obj: cxx $
+    ..\..\processor\basic_code_modules.cc
+build obj\processor\processor_bits.dump_context.obj: cxx $
+    ..\..\processor\dump_context.cc
+build obj\processor\processor_bits.dump_object.obj: cxx $
+    ..\..\processor\dump_object.cc
+build obj\processor\processor_bits.logging.obj: cxx ..\..\processor\logging.cc
+build obj\processor\processor_bits.minidump.obj: cxx $
+    ..\..\processor\minidump.cc
+build obj\processor\processor_bits.pathname_stripper.obj: cxx $
+    ..\..\processor\pathname_stripper.cc
+build obj\processor\processor_bits.proc_maps_linux.obj: cxx $
+    ..\..\processor\proc_maps_linux.cc
+
+build obj\client\windows\unittests\processor_bits.lib: alink $
+    obj\common\processor_bits.string_conversion.obj $
+    obj\processor\processor_bits.basic_code_modules.obj $
+    obj\processor\processor_bits.dump_context.obj $
+    obj\processor\processor_bits.dump_object.obj $
+    obj\processor\processor_bits.logging.obj $
+    obj\processor\processor_bits.minidump.obj $
+    obj\processor\processor_bits.pathname_stripper.obj $
+    obj\processor\processor_bits.proc_maps_linux.obj
+  libflags = /LIBPATH:"..\..\third_party\platformsdk_win7\files\Lib" $
+      /ignore:4221

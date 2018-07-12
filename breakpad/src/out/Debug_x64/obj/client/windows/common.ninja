@@ -1,0 +1,39 @@
+arch = environment.x64
+cc = $cl_x64
+cxx = $cl_x64
+cc_host = $cl_x64
+cxx_host = $cl_x64
+asm = $ml_x64
+pdbname_c = obj\client\windows\common.c.pdb
+pdbname_cc = obj\client\windows\common.cc.pdb
+pchprefix = common
+defines = -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -DWIN32 -D_WINDOWS $
+    -D_HAS_EXCEPTIONS=0 -DNOMINMAX -D_CRT_RAND_S $
+    -DCERT_CHAIN_PARA_HAS_EXTRA_FIELDS -DWIN32_LEAN_AND_MEAN -D_SECURE_ATL $
+    -D_HAS_TR1=0 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_WARNINGS $
+    -D_CRT_NONSTDC_NO_DEPRECATE -D_USING_V110_SDK71_ -DNO_TCMALLOC $
+    -D_UNICODE -DUNICODE -D_DEBUG
+asmflags = 
+rcflags = /I..\.. /I..\..\client\windows /d_DEBUG /l409
+includes = -I..\.. -I..\..\third_party\platformsdk_win7\files\Include
+midl_includes = -I..\..\third_party\platformsdk_win7\files\Include
+cflags = /wd4100 /wd4127 /wd4396 /wd4503 /wd4512 /wd4819 /wd4995 /wd4702 $
+    /wd4800 /Od /fp:precise /W4 /WX /Zi /GR- /Gy /GS /RTC1 /MTd $
+    /Zc:wchar_t- /FS
+cflags_c = 
+cflags_cc = /TP
+arflags = 
+
+build obj\common\windows\common.guid_string.obj: cxx $
+    ..\..\common\windows\guid_string.cc
+build obj\common\windows\common.http_upload.obj: cxx $
+    ..\..\common\windows\http_upload.cc
+build obj\common\windows\common.string_utils.obj: cxx $
+    ..\..\common\windows\string_utils.cc
+
+build obj\client\windows\common.lib: alink $
+    obj\common\windows\common.guid_string.obj $
+    obj\common\windows\common.http_upload.obj $
+    obj\common\windows\common.string_utils.obj
+  libflags = /LIBPATH:"..\..\third_party\platformsdk_win7\files\Lib\x64" $
+      /ignore:4221
