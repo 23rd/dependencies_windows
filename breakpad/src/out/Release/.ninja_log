@@ -1,9 +1,9 @@
 # ninja log v5
-2	2170	0	obj/common/windows/common.string_utils.obj	9a3a4e8d3bfdf1d6
-9	2193	0	obj/common/windows/common.guid_string.obj	1a7286d3e5e80958
-13	3034	0	obj/common/windows/common.http_upload.obj	36c1e2db6a95ac25
-16	3042	0	obj/client/windows/crash_generation/crash_generation_client.crash_generation_client.obj	b92735381cce2e95
-3045	3235	0	obj/client/windows/crash_generation/crash_generation_client.lib	f7c86bdff0d7bb59
-19	3389	0	obj/client/windows/handler/exception_handler.exception_handler.obj	c49615dab91607e7
-3036	3397	0	obj/client/windows/common.lib	afab3c7fe4f8dc59
-3391	3562	0	obj/client/windows/handler/exception_handler.lib	31222b475c125efd
+19	1453	0	obj/common/windows/common.string_utils.obj	1881acc0db22cb8d
+8	1459	0	obj/common/windows/common.guid_string.obj	3a1ed86ae83238e0
+3	2258	0	obj/client/windows/crash_generation/crash_generation_client.crash_generation_client.obj	791c365f92756107
+15	2349	0	obj/common/windows/common.http_upload.obj	620fc2be3ca3e9d6
+2273	2541	0	obj/client/windows/crash_generation/crash_generation_client.lib	f7c86bdff0d7bb59
+2350	2776	0	obj/client/windows/common.lib	afab3c7fe4f8dc59
+23	2827	0	obj/client/windows/handler/exception_handler.exception_handler.obj	b6485191bfa56a4a
+2828	3042	0	obj/client/windows/handler/exception_handler.lib	31222b475c125efd
